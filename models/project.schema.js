@@ -1,0 +1,38 @@
+import { Schema, model } from "mongoose";
+
+const projectSchema = new Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    capital: {
+        type: String,
+        required: true,
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: ["open", "closed"],
+    },
+    ownerId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    investorsIds: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
+    ],
+    createdAt: {
+        type: Date,
+        default: () => Date.now(),
+    },
+});
+
+export default model("Project", projectSchema);

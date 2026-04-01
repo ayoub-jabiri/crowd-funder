@@ -2,10 +2,14 @@
 import { Router } from "express";
 
 // Internal Modules
-import { getUsers } from "../controllers/user.controller.js";
+import { register } from "../controllers/user.controller.js";
+import {
+    userValidationRules,
+    dataValidation,
+} from "../middlewares/user.middleware.js";
 
 const userRoutes = Router();
 
-userRoutes.get("/", getUsers);
+userRoutes.post("/register", userValidationRules, dataValidation, register);
 
 export default userRoutes;

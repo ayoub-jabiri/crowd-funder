@@ -1,9 +1,10 @@
 // External Modules
 import { body, validationResult } from "express-validator";
+import bcrypt from "bcrypt";
 
 // Internal Modules
-import User from "../models/user.schema.js";
 import { errorResponse } from "../utils/error.response.js";
+import { getUser } from "../services/user.service.js";
 
 export const userValidationRules = [
     body("name").notEmpty().withMessage("The name is required"),
@@ -28,11 +29,31 @@ export const dataValidation = (req, res, next) => {
 export const registerCheck = async (req, res, next) => {
     const { email } = req.body;
     try {
-        const user = await User.find({ email });
+        const user = await getUser({ email });
 
-        // Check if the email is already taken
-        if (user.length > 0)
+        // Check if the email is already exists
+        if (user)
             return errorResponse(res, 400, "The email is already exists!");
+
+        next();
+    } catch (error) {
+        console.error(error.message);
+        errorResponse(res, 500, "An internal error");
+    }
+};
+
+export const loginCheck = async (req, res, next) => {
+    const { email, password } = req.body;
+    try {
+        const user = await getUser({ email });
+
+        // Check if the user is registred
+        if (!user)
+            return errorResponse(res, 404, "The user is not registred yet!");
+
+        // Check if the password is correct
+        if (!(await bcrypt.compare(password, user.password)))
+            return errorResponse(res, 401, "The password is not correct!");
 
         next();
     } catch (error) {

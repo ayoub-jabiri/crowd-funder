@@ -17,10 +17,6 @@ const projectSchema = new Schema({
         type: Number,
         required: true,
     },
-    capital: {
-        type: Number,
-        required: true,
-    },
     status: {
         type: String,
         required: true,

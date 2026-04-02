@@ -5,7 +5,7 @@ const balanceSchema = new Schema({
         type: Number,
         required: true,
     },
-    userId: {
+    investorId: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,

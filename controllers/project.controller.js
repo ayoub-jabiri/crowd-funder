@@ -1,5 +1,3 @@
-// External Modules
-
 // Internal Modules
 import {
     getOwnerProjects,

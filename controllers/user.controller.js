@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 // Internal Modules
 import { registerUser } from "../services/user.service.js";
+import { createBalance } from "../services/balance.service.js";
 import { errorResponse } from "../utils/error.response.js";
 import { getUser } from "../services/user.service.js";
 
@@ -18,6 +19,11 @@ export const register = async (req, res) => {
             password,
             role,
         });
+
+        // Create balance for the investor
+        if (role == "investor") {
+            await createBalance(user._id);
+        }
 
         res.status(201).json({
             message: "The user has been registered successfully!",

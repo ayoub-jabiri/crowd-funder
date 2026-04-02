@@ -1,5 +1,5 @@
 // External Modules
-import { config } from "dotenv";
+import "dotenv/config";
 import express from "express";
 
 // Internal Modules
@@ -11,7 +11,6 @@ import balanceRoutes from "./routes/balance.router.js";
 const app = express();
 
 // Database Connection
-config();
 const PORT = process.env.PORT;
 dbConnect();
 

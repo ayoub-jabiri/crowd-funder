@@ -1,7 +1,11 @@
 // External Modules
 
 // Internal Modules
-import { registerProject, deleteProject } from "../services/project.service.js";
+import {
+    registerProject,
+    updateProject,
+    deleteProject,
+} from "../services/project.service.js";
 import { errorResponse } from "../utils/error.response.js";
 
 export const register = async (req, res) => {
@@ -29,6 +33,37 @@ export const register = async (req, res) => {
         res.status(201).json({
             message: "The project has been registered successfully!",
             project,
+        });
+    } catch (error) {
+        console.error(error.message);
+        errorResponse(res, 500, "An internal error occured!");
+    }
+};
+
+export const update = async (req, res) => {
+    const {
+        title,
+        description,
+        capital,
+        initialInvestment,
+        maxPercentage,
+        status,
+    } = req.body;
+    const { id } = req.params;
+
+    try {
+        const newProject = await updateProject(id, {
+            title,
+            description,
+            capital,
+            initialInvestment,
+            maxPercentage,
+            status,
+        });
+
+        res.json({
+            message: "The project has been updated successfully",
+            newProject,
         });
     } catch (error) {
         console.error(error.message);

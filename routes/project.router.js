@@ -2,7 +2,11 @@
 import { Router } from "express";
 
 // Internal Modules
-import { register, deletePr } from "../controllers/project.controller.js";
+import {
+    register,
+    update,
+    deletePr,
+} from "../controllers/project.controller.js";
 import {
     projectRules,
     projectValidation,
@@ -25,10 +29,20 @@ projectRoutes.post(
     register
 );
 
+projectRoutes.put(
+    "/:id",
+    authorizationCheck(["owner"]),
+    projectCheck,
+    projectRules,
+    projectValidation,
+    update
+);
+
 projectRoutes.delete(
     "/:id",
     authorizationCheck(["owner"]),
     projectCheck,
+
     deletePr
 );
 

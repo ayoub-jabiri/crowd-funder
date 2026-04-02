@@ -23,6 +23,10 @@ const projectSchema = new Schema({
             return this.initialInvestment;
         },
     },
+    maxPercentage: {
+        type: Number,
+        required: true,
+    },
     status: {
         type: String,
         required: true,

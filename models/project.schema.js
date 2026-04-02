@@ -16,6 +16,11 @@ const projectSchema = new Schema({
     initialInvestment: {
         type: Number,
         required: true,
+        validate: {
+            validator: function (value) {
+                return value <= this.capital;
+            },
+        },
     },
     currentAmount: {
         type: Number,

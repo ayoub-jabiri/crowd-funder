@@ -10,7 +10,15 @@ const projectSchema = new Schema({
         required: true,
     },
     capital: {
-        type: String,
+        type: Number,
+        required: true,
+    },
+    initialInvestment: {
+        type: Number,
+        required: true,
+    },
+    capital: {
+        type: Number,
         required: true,
     },
     status: {

@@ -17,6 +17,12 @@ const projectSchema = new Schema({
         type: Number,
         required: true,
     },
+    currentAmount: {
+        type: Number,
+        default: function () {
+            return this.initialInvestment;
+        },
+    },
     status: {
         type: String,
         required: true,

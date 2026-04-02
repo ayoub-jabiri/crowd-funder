@@ -4,6 +4,9 @@ export const registerProject = async (project) => await Project.create(project);
 
 export const getProject = async (query) => await Project.findOne(query);
 
+export const getOwnerProjects = async (ownerId) =>
+    await Project.find({ ownerId });
+
 export const deleteProject = async (projectId) =>
     await Project.deleteOne(projectId);
 

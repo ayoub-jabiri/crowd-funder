@@ -3,6 +3,7 @@ import { Router } from "express";
 
 // Internal Modules
 import {
+    getProjects,
     register,
     update,
     deletePr,
@@ -20,6 +21,8 @@ import {
 const projectRoutes = Router();
 
 projectRoutes.use(authenticationCheck);
+
+projectRoutes.get("/", authorizationCheck(["owner"]), getProjects);
 
 projectRoutes.post(
     "/register",

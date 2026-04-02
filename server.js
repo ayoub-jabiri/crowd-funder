@@ -5,6 +5,7 @@ import express from "express";
 // Internal Modules
 import { dbConnect } from "./config/db.js";
 import userRoutes from "./routes/user.router.js";
+import projectRoutes from "./routes/project.router.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ dbConnect();
 app.use(express.json());
 
 app.use("/users", userRoutes);
+app.use("/projects", projectRoutes);
 
 app.listen(PORT, () => {
     console.log(`The server is listening on port ${PORT}`);

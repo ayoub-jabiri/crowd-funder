@@ -51,14 +51,7 @@ export const register = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-    const {
-        title,
-        description,
-        capital,
-        initialInvestment,
-        maxPercentage,
-        status,
-    } = req.body;
+    const { title, description, capital, maxPercentage, status } = req.body;
     const { id } = req.params;
 
     try {
@@ -66,7 +59,6 @@ export const update = async (req, res) => {
             title,
             description,
             capital,
-            initialInvestment,
             maxPercentage,
             status,
         });

@@ -16,9 +16,10 @@ export const updateProject = async (id, newData) => {
     project.title = newData.title;
     project.description = newData.description;
     project.capital = newData.capital;
-    project.initialInvestment = newData.initialInvestment;
     project.maxPercentage = newData.maxPercentage;
-    project.status = newData.status;
+
+    if (project.capital > project.currentAmount)
+        project.status = newData.status;
 
     return await project.save();
 };

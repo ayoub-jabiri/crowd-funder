@@ -6,6 +6,7 @@ import {
     openProjects,
     projectDetails,
     projectInvest,
+    getInvestments,
 } from "../controllers/investment.controller.js";
 import {
     authenticationCheck,
@@ -43,6 +44,12 @@ investmentRoutes.put(
     invetmentValidation,
     investmentCheck,
     projectInvest
+);
+
+investmentRoutes.get(
+    "/investments",
+    authorizationCheck(["investor"]),
+    getInvestments
 );
 
 export default investmentRoutes;

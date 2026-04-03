@@ -24,3 +24,16 @@ export const investInProject = async (projectId, amount, investorId) => {
         percentageHeld: amountPercentage,
     });
 };
+
+export const getInvestorInvestments = async (investorId) => {
+    const investments = await Investment.find({ investorId });
+
+    const projects = await Project.find({ investorsIds: investorId });
+
+    return [
+        {
+            investments,
+            projects,
+        },
+    ];
+};

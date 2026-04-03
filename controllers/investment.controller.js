@@ -3,6 +3,7 @@ import {
     getOpenProjects,
     getProjectDetails,
     investInProject,
+    getInvestorInvestments,
 } from "../services/invetment.service.js";
 import { errorResponse } from "../utils/error.response.js";
 
@@ -36,6 +37,17 @@ export const projectInvest = async (req, res) => {
         const investment = await investInProject(id, amount, req.user._id);
 
         res.json(investment);
+    } catch (error) {
+        console.error(error.message);
+        errorResponse(res, 500, "An internal error occured!");
+    }
+};
+
+export const getInvestments = async (req, res) => {
+    try {
+        const investments = await getInvestorInvestments(req.user._id);
+
+        res.send(investments);
     } catch (error) {
         console.error(error.message);
         errorResponse(res, 500, "An internal error occured!");

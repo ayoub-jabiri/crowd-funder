@@ -36,6 +36,26 @@ export const projectRules = [
         ),
 ];
 
+export const updateRules = [
+    body("title").notEmpty().withMessage("The project title is required"),
+    body("description")
+        .notEmpty()
+        .withMessage("The project description is required"),
+    body("capital")
+        .isFloat({ min: 0.01 })
+        .withMessage(
+            "The project capital is required and must be greater than 0"
+        ),
+    body("maxPercentage")
+        .isInt()
+        .withMessage("The project max percentage is required "),
+    body("status")
+        .isIn(["open", "closed"])
+        .withMessage(
+            "The role is required and must be either 'open' or 'closed'"
+        ),
+];
+
 export const projectValidation = (req, res, next) => {
     const validation = validationResult(req);
 
@@ -55,6 +75,26 @@ export const projectCheck = async (req, res, next) => {
         const project = await getProject({ _id: id });
 
         if (!project) return errorResponse(res, 404, "Project not found!");
+
+        next();
+    } catch (error) {
+        console.error(error.message);
+        errorResponse(res, 500, "An internal error occured!");
+    }
+};
+
+export const verifyOwnership = async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+        const project = await getProject({ _id: id });
+
+        if (project.ownerId != req.user._id)
+            return errorResponse(
+                res,
+                403,
+                "You don't have the right to access or manipulate this project!"
+            );
 
         next();
     } catch (error) {

@@ -10,8 +10,10 @@ import {
 } from "../controllers/project.controller.js";
 import {
     projectRules,
+    updateRules,
     projectValidation,
     projectCheck,
+    verifyOwnership,
 } from "../middlewares/project.middleware.js";
 import {
     authenticationCheck,
@@ -36,7 +38,8 @@ projectRoutes.put(
     "/:id",
     authorizationCheck(["owner"]),
     projectCheck,
-    projectRules,
+    verifyOwnership,
+    updateRules,
     projectValidation,
     update
 );
@@ -45,7 +48,7 @@ projectRoutes.delete(
     "/:id",
     authorizationCheck(["owner"]),
     projectCheck,
-
+    verifyOwnership,
     deletePr
 );
 

@@ -41,3 +41,19 @@ export const getInvestorInvestments = async (investorId) => {
         },
     ];
 };
+
+export const getProjectInvestments = async (projectId) => {
+    const investments = await Investment.aggregate([
+        {
+            $match: { projectId },
+        },
+        {
+            $group: {
+                _id: null,
+                totalPercantage: { $sum: "percentageHeld" },
+            },
+        },
+    ]);
+
+    return investments;
+};

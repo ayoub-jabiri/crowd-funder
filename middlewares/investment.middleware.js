@@ -3,7 +3,10 @@ import { body, validationResult } from "express-validator";
 import mongoose from "mongoose";
 
 // Internal Modules
-import { getProjectDetails } from "../services/invetment.service.js";
+import {
+    getProjectDetails,
+    getProjectInvestments,
+} from "../services/invetment.service.js";
 import { getInvestorBalance } from "../services/balance.service.js";
 import { errorResponse } from "../utils/error.response.js";
 
@@ -96,6 +99,20 @@ export const investmentCheck = async (req, res, next) => {
         }
 
         next();
+    } catch (error) {
+        console.error(error.message);
+        errorResponse(res, 500, "An internal error occured!");
+    }
+};
+
+export const percentageCheck = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const project = await getProjectDetails(id);
+
+        const investments = await getProjectInvestments(id);
+
+        res.json(investments);
     } catch (error) {
         console.error(error.message);
         errorResponse(res, 500, "An internal error occured!");

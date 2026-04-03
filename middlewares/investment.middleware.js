@@ -8,7 +8,7 @@ import { errorResponse } from "../utils/error.response.js";
 
 export const invetmentRules = [
     body("amount")
-        .isInt({ min: 1 })
+        .isFloat({ min: 0.01 })
         .withMessage(
             "The investment amount is required and must be greater than 0"
         ),
@@ -42,7 +42,40 @@ export const projectExistenceCheck = async (req, res, next) => {
 
 export const investmentCheck = async (req, res, next) => {
     const { id } = req.params;
+    const { amount } = req.body;
     try {
+        const project = await getProjectDetails(id);
+
+        // Check if the project is open
+        if (project.status == "closed")
+            return errorResponse(res, 400, "The project is closed!");
+
+        // Check if the amount percentage override the max percentage
+        const amountPercentage = (+amount * 100) / project.capital;
+
+        if (amountPercentage > project.maxPercentage)
+            return errorResponse(
+                res,
+                400,
+                `The investment cannot be proceeded because the amount percentage, which is '${amountPercentage}%', is overriding the max investment percentage '${project.maxPercentage}%'!`
+            );
+
+        // Check if the amount override the capital
+        const currentAmount = amount + project.currentAmount;
+
+        if (currentAmount > project.capital) {
+            return errorResponse(
+                res,
+                400,
+                `The investment cannot be proceeded because the amount will override the project capital which is '${
+                    project.capital
+                }'. Only the amount of '${
+                    project.capital - project.currentAmount
+                }' is allowed!`
+            );
+        }
+
+        next();
     } catch (error) {
         console.error(error.message);
         errorResponse(res, 500, "An internal error occured!");

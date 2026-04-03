@@ -3,7 +3,7 @@ import { body, validationResult } from "express-validator";
 
 export const balanceRules = [
     body("amount")
-        .isInt({ min: 1 })
+        .isFloat({ min: 0.01 })
         .withMessage(
             "The deposit amount is required and must be greater than 0"
         ),

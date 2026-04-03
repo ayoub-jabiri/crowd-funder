@@ -12,12 +12,12 @@ export const projectRules = [
         .notEmpty()
         .withMessage("The project description is required"),
     body("capital")
-        .isInt({ min: 1 })
+        .isFloat({ min: 0.01 })
         .withMessage(
             "The project capital is required and must be greater than 0"
         ),
     body("initialInvestment")
-        .isInt({ min: 1 })
+        .isFloat({ min: 0.01 })
         .custom((value, { req }) => {
             if (+value > +req.body.capital) {
                 throw new Error(

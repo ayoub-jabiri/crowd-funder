@@ -15,6 +15,7 @@ import {
     invetmentRules,
     projectExistenceCheck,
     invetmentValidation,
+    investmentCheck,
 } from "../middlewares/investment.middleware.js";
 
 const investmentRoutes = Router();
@@ -40,6 +41,7 @@ investmentRoutes.put(
     projectExistenceCheck,
     invetmentRules,
     invetmentValidation,
+    investmentCheck,
     projectInvest
 );
 

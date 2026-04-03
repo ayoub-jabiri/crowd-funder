@@ -11,8 +11,12 @@ export const investInProject = async (projectId, amount, investorId) => {
     const project = await getProjectDetails(projectId);
 
     project.currentAmount += +amount;
-    project.investorsIds.push(investorId);
+
+    if (!project.investorsIds.includes(investorId))
+        project.investorsIds.push(investorId);
+
     if (project.currentAmount == project.capital) project.status = "closed";
+
     await project.save();
 
     const amountPercentage = (+amount * 100) / project.capital;

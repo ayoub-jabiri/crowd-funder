@@ -16,7 +16,7 @@ const investmentRoutes = Router();
 investmentRoutes.use(authenticationCheck);
 
 investmentRoutes.get(
-    "/open-projects",
+    "/projects/open",
     authorizationCheck(["investor"]),
     openProjects
 );

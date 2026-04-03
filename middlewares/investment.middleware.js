@@ -110,7 +110,7 @@ export const percentageCheck = async (req, res, next) => {
     try {
         const project = await getProjectDetails(id);
 
-        const investments = await getProjectInvestments(id);
+        const investments = await getProjectInvestments(id, req.user._id);
 
         res.json(investments);
     } catch (error) {

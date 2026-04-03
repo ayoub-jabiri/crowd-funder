@@ -10,6 +10,15 @@ const investmentSchema = new Schema({
         ref: "User",
         required: true,
     },
+    projectId: {
+        type: Schema.Types.ObjectId,
+        ref: "Project",
+        required: true,
+    },
+    percentageHeld: {
+        type: Number,
+        required: true,
+    },
     createdAt: {
         type: Date,
         default: () => Date.now(),

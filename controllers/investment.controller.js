@@ -2,6 +2,7 @@
 import {
     getOpenProjects,
     getProjectDetails,
+    investInProject,
 } from "../services/invetment.service.js";
 import { errorResponse } from "../utils/error.response.js";
 
@@ -30,10 +31,11 @@ export const projectDetails = async (req, res) => {
 
 export const projectInvest = async (req, res) => {
     const { id } = req.params;
+    const { amount } = req.body;
     try {
-        // const project = await getProjectDetails(id);
+        const investment = await investInProject(id, amount, req.user._id);
 
-        res.json("project");
+        res.json(investment);
     } catch (error) {
         console.error(error.message);
         errorResponse(res, 500, "An internal error occured!");

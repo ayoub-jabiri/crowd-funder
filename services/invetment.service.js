@@ -1,7 +1,26 @@
 import Project from "../models/project.schema.js";
+import Investment from "../models/investment.schema.js";
 
 export const getOpenProjects = async () =>
     await Project.find({ status: "open" });
 
 export const getProjectDetails = async (projectId) =>
     await Project.findById(projectId);
+
+export const investInProject = async (projectId, amount, investorId) => {
+    const project = await getProjectDetails(projectId);
+
+    project.currentAmount += +amount;
+    project.investorsIds.push(investorId);
+    if (project.currentAmount == project.capital) project.status = "closed";
+    await project.save();
+
+    const amountPercentage = (+amount * 100) / project.capital;
+
+    return await Investment.create({
+        amount,
+        investorId,
+        projectId: project._id,
+        percentageHeld: amountPercentage,
+    });
+};

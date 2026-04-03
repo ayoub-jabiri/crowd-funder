@@ -1,15 +1,18 @@
 // External Modules
 import { body, validationResult } from "express-validator";
 
-export const balanceRules = [
+// Internal Modules
+import { errorResponse } from "../utils/error.response.js";
+
+export const invetmentRules = [
     body("amount")
         .isInt({ min: 1 })
         .withMessage(
-            "The deposit amount is required and must be greater than 0"
+            "The investment amount is required and must be greater than 0"
         ),
 ];
 
-export const balanceValidation = (req, res, next) => {
+export const invetmentValidation = (req, res, next) => {
     const validation = validationResult(req);
 
     if (!validation.isEmpty())

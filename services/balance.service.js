@@ -7,3 +7,13 @@ export const createBalance = async (investorId) =>
     await Balance.create({
         investorId,
     });
+
+export const balanceDeposit = async (investorId, amount) => {
+    const balance = await Balance.findOne({
+        investorId,
+    });
+
+    balance.balance += +amount;
+
+    return await balance.save();
+};

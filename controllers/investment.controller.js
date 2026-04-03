@@ -5,6 +5,7 @@ import {
     investInProject,
     getInvestorInvestments,
 } from "../services/invetment.service.js";
+import { decreaseBalance } from "../services/balance.service.js";
 import { errorResponse } from "../utils/error.response.js";
 
 export const openProjects = async (req, res) => {
@@ -35,6 +36,8 @@ export const projectInvest = async (req, res) => {
     const { amount } = req.body;
     try {
         const investment = await investInProject(id, amount, req.user._id);
+
+        await decreaseBalance(req.user._id, amount);
 
         res.json(investment);
     } catch (error) {

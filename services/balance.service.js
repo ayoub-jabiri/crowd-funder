@@ -17,3 +17,13 @@ export const balanceDeposit = async (investorId, amount) => {
 
     return await balance.save();
 };
+
+export const decreaseBalance = async (investorId, amount) => {
+    const balance = await Balance.findOne({
+        investorId,
+    });
+
+    balance.balance -= +amount;
+
+    return await balance.save();
+};

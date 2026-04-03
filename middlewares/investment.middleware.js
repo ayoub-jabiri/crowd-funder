@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 // Internal Modules
 import { getProjectDetails } from "../services/invetment.service.js";
+import { getInvestorBalance } from "../services/balance.service.js";
 import { errorResponse } from "../utils/error.response.js";
 
 export const invetmentRules = [
@@ -32,6 +33,25 @@ export const projectExistenceCheck = async (req, res, next) => {
         const project = await getProjectDetails(id);
 
         if (!project) return errorResponse(res, 404, "Project not found!");
+
+        next();
+    } catch (error) {
+        console.error(error.message);
+        errorResponse(res, 500, "An internal error occured!");
+    }
+};
+
+export const balanceCheck = async (req, res, next) => {
+    const { amount } = req.body;
+    try {
+        const balance = await getInvestorBalance(req.user._id);
+
+        if (amount > balance.balance)
+            return errorResponse(
+                res,
+                400,
+                "There is no sufficient balance to invest from!"
+            );
 
         next();
     } catch (error) {

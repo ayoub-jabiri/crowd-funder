@@ -16,6 +16,7 @@ import {
     invetmentRules,
     projectExistenceCheck,
     invetmentValidation,
+    balanceCheck,
     investmentCheck,
 } from "../middlewares/investment.middleware.js";
 
@@ -42,6 +43,7 @@ investmentRoutes.put(
     projectExistenceCheck,
     invetmentRules,
     invetmentValidation,
+    balanceCheck,
     investmentCheck,
     projectInvest
 );

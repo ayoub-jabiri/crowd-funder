@@ -48,9 +48,8 @@ export const projectValidation = (req, res, next) => {
 export const projectCheck = async (req, res, next) => {
     const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        errorResponse(res, 400, "Invalid ID format");
-    }
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return errorResponse(res, 400, "Invalid ID format");
 
     try {
         const project = await getProject({ _id: id });

@@ -13,6 +13,7 @@ import {
 } from "../middlewares/auth.middleware.js";
 import {
     invetmentRules,
+    projectExistenceCheck,
     invetmentValidation,
 } from "../middlewares/investment.middleware.js";
 
@@ -29,12 +30,14 @@ investmentRoutes.get(
 investmentRoutes.get(
     "/projects/:id",
     authorizationCheck(["investor"]),
+    projectExistenceCheck,
     projectDetails
 );
 
 investmentRoutes.put(
     "/projects/:id/invest",
     authorizationCheck(["investor"]),
+    projectExistenceCheck,
     invetmentRules,
     invetmentValidation,
     projectInvest

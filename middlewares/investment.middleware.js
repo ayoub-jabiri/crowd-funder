@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 // Internal Modules
 import {
     getProjectDetails,
-    getProjectInvestments,
+    getProjectPrecentage,
 } from "../services/invetment.service.js";
 import { getInvestorBalance } from "../services/balance.service.js";
 import { errorResponse } from "../utils/error.response.js";
@@ -110,9 +110,19 @@ export const percentageCheck = async (req, res, next) => {
     try {
         const project = await getProjectDetails(id);
 
-        const investments = await getProjectInvestments(id, req.user._id);
+        const investmentPercentage = await getProjectPrecentage(
+            id,
+            req.user._id
+        );
 
-        res.json(investments);
+        if (investmentPercentage == project.maxPercentage)
+            return errorResponse(
+                res,
+                400,
+                `You cannot invest in this project any more because you will override the max allowed investment percentage '${project.maxPercentage}%'`
+            );
+
+        next();
     } catch (error) {
         console.error(error.message);
         errorResponse(res, 500, "An internal error occured!");

@@ -1,3 +1,7 @@
+// External Modules
+import mongoose from "mongoose";
+
+// Internal Modules
 import Project from "../models/project.schema.js";
 import Investment from "../models/investment.schema.js";
 
@@ -42,10 +46,13 @@ export const getInvestorInvestments = async (investorId) => {
     ];
 };
 
-export const getProjectInvestments = async (projectId, investorId) => {
-    const investments = await Investment.aggregate([
+export const getProjectPrecentage = async (projectId, investorId) => {
+    const [{ totalPercantage }] = await Investment.aggregate([
         {
-            $match: { projectId, investorId },
+            $match: {
+                projectId: new mongoose.Types.ObjectId(projectId),
+                investorId: new mongoose.Types.ObjectId(investorId),
+            },
         },
         {
             $group: {
@@ -55,5 +62,5 @@ export const getProjectInvestments = async (projectId, investorId) => {
         },
     ]);
 
-    return investments;
+    return totalPercantage;
 };

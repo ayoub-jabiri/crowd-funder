@@ -34,16 +34,32 @@ export const investInProject = async (projectId, amount, investorId) => {
 };
 
 export const getInvestorInvestments = async (investorId) => {
-    const investments = await Investment.find({ investorId });
-
-    const projects = await Project.find({ investorsIds: investorId });
-
-    return [
+    const investments = await Investment.aggregate([
         {
-            investments,
-            projects,
+            $match: { investorId: new mongoose.Types.ObjectId(investorId) },
         },
-    ];
+        {
+            $lookup: {
+                from: "projects",
+                localField: "projectId",
+                foreignField: "_id",
+                as: "project",
+            },
+        },
+        {
+            $unwind: "$project",
+        },
+        {
+            $project: {
+                _id: 0,
+                project: 1,
+                amount: 1,
+                percentageHeld: 1,
+            },
+        },
+    ]);
+
+    return { investments };
 };
 
 export const getProjectPrecentage = async (projectId, investorId) => {

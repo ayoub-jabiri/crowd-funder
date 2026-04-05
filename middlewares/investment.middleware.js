@@ -115,7 +115,7 @@ export const percentageCheck = async (req, res, next) => {
             req.user._id
         );
 
-        if (investmentPercentage == project.maxPercentage)
+        if (investmentPercentage >= project.maxPercentage)
             return errorResponse(
                 res,
                 400,

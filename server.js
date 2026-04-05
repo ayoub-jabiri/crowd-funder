@@ -8,6 +8,7 @@ import userRoutes from "./routes/user.router.js";
 import projectRoutes from "./routes/project.router.js";
 import balanceRoutes from "./routes/balance.router.js";
 import investmentRoutes from "./routes/investment.router.js";
+import adminRoutes from "./routes/admin.router.js";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/users", userRoutes);
 app.use("/projects", projectRoutes);
 app.use("/balance", balanceRoutes);
 app.use("/investment", investmentRoutes);
+app.use("/admin", adminRoutes);
 
 app.listen(PORT, () => {
     console.log(`The server is listening on port ${PORT}`);

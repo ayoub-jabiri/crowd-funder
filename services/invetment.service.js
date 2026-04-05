@@ -64,3 +64,14 @@ export const getProjectPrecentage = async (projectId, investorId) => {
 
     return totalPercantage;
 };
+
+export const getInvestorProjects = async (investorId) => {
+    const projects = await Project.find({ investorsIds: investorId });
+
+    const totalInvestments = await Investment.countDocuments({ investorId });
+
+    return {
+        totalInvestments,
+        fundedProjects: projects,
+    };
+};

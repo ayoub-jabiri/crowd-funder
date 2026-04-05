@@ -2,7 +2,11 @@
 import { Router } from "express";
 
 // Internal Modules
-import { getInvestors, getOwners } from "../controllers/admin.controller.js";
+import {
+    getInvestors,
+    getOwners,
+    getInvestorPortfolio,
+} from "../controllers/admin.controller.js";
 import {
     authenticationCheck,
     authorizationCheck,
@@ -14,5 +18,10 @@ adminRoutes.use(authenticationCheck);
 
 adminRoutes.get("/investors", authorizationCheck(["admin"]), getInvestors);
 adminRoutes.get("/owners", authorizationCheck(["admin"]), getOwners);
+adminRoutes.get(
+    "/investors/:id",
+    authorizationCheck(["admin"]),
+    getInvestorPortfolio
+);
 
 export default adminRoutes;

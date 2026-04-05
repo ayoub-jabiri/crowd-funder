@@ -6,6 +6,7 @@ import {
     getInvestors,
     getOwners,
     getInvestorPortfolio,
+    getOwnerPortfolio,
 } from "../controllers/admin.controller.js";
 import {
     authenticationCheck,
@@ -22,6 +23,11 @@ adminRoutes.get(
     "/investors/:id",
     authorizationCheck(["admin"]),
     getInvestorPortfolio
+);
+adminRoutes.get(
+    "/owners/:id",
+    authorizationCheck(["admin"]),
+    getOwnerPortfolio
 );
 
 export default adminRoutes;

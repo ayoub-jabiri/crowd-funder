@@ -63,7 +63,7 @@ export const getInvestorInvestments = async (investorId) => {
 };
 
 export const getProjectPrecentage = async (projectId, investorId) => {
-    const [{ totalPercantage }] = await Investment.aggregate([
+    const data = await Investment.aggregate([
         {
             $match: {
                 projectId: new mongoose.Types.ObjectId(projectId),
@@ -77,6 +77,8 @@ export const getProjectPrecentage = async (projectId, investorId) => {
             },
         },
     ]);
+
+    const totalPercantage = data.length ? data[0].totalPercantage : 0;
 
     return totalPercantage;
 };

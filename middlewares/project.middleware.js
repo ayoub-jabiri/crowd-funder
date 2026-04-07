@@ -18,14 +18,15 @@ export const projectRules = [
         ),
     body("initialInvestment")
         .isFloat({ min: 0.01 })
+        .withMessage("The project initial investment is required ")
         .custom((value, { req }) => {
             if (+value > +req.body.capital) {
                 throw new Error(
                     "The project capital is cannot be greater than the capital"
                 );
             }
-        })
-        .withMessage("The project initial investment is required "),
+            return true;
+        }),
     body("maxPercentage")
         .isInt()
         .withMessage("The project max percentage is required "),

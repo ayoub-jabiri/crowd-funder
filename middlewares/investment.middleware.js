@@ -109,19 +109,16 @@ export const percentageCheck = async (req, res, next) => {
     const { id } = req.params;
     try {
         const project = await getProjectDetails(id);
-
         const investmentPercentage = await getProjectPrecentage(
             id,
             req.user._id
         );
-
         if (investmentPercentage >= project.maxPercentage)
             return errorResponse(
                 res,
                 400,
                 `You cannot invest in this project any more because you will override the max allowed investment percentage '${project.maxPercentage}%'`
             );
-
         next();
     } catch (error) {
         console.error(error.message);

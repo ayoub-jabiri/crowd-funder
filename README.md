@@ -39,10 +39,9 @@ To ensure a fair and secure ecosystem, the API enforces the following logic:
 
 ## 🏗 Technology Stack
 
--   **Language:** Java / Spring Boot
+-   **Back-end:** Node.js and Express.
 -   **Security:** JWT (JSON Web Tokens) for role-based access control (Admin, Project Owner, Investor).
--   **Database:** Relational Database (PostgreSQL / MySQL).
--   **Documentation:** Swagger/OpenAPI.
+-   **Database:** MongoDB.
 
 ---
 
